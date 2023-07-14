@@ -43,3 +43,43 @@ class SearchManager(BasePage):
         search_result = self.find_element(YaSearchLocators.LOCATOR_YA_TARGET_LINK)
         return search_result
 
+
+class ImageSearchManager(BasePage):
+
+    def check_menu_button(self):
+        time.sleep(30)
+        search_field = self.find_element(YaSearchLocators.LOCATOR_YA_SEARCH_FIELD)
+        search_field.click()
+        menu_button = self.find_element(YaSearchLocators.LOCATOR_YA_MENU_BUTTON)
+        assert menu_button is not None
+
+    def open_menu_click_images(self):
+        menu_button = self.find_element(YaSearchLocators.LOCATOR_YA_MENU_BUTTON)
+        menu_button.click()
+        images_button = self.find_element(YaSearchLocators.LOCATOR_YA_IMAGES_BUTTON)
+        images_button.click()
+        assert images_button is not None
+
+    def check_images_url(self):
+        pass
+
+    def open_first_category(self):
+        pass
+
+    def check_search_field_text(self):
+        pass
+
+    def open_and_check_image(self):
+        pass
+
+    def navigate_forward(self):
+        pass
+
+    def check_is_image_changed(self):
+        pass
+
+    def navigate_backwards(self):
+        pass
+
+    def check_image(self):
+        pass
