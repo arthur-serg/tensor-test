@@ -10,10 +10,11 @@ class YaSearchLocators:
     LOCATOR_YA_SEARCH_BUTTON = (By.CLASS_NAME, ".search3__button")
     LOCATOR_YA_SUGGEST_TABLE = (By.CLASS_NAME, "mini-suggest__popup-content")
     LOCATOR_YA_NAVIGATION_BAR = (By.CSS_SELECTOR, ".service__name")
-    LOCATOR_YA_LINK = (By.PARTIAL_LINK_TEXT, "tensor.ru")
+    LOCATOR_YA_TARGET_LINK = (By.PARTIAL_LINK_TEXT, "tensor.ru")
     LOCATOR_YA_SEARCH_PAGE_TITLE = (By.XPATH, "/html/head/title")
-    LOCATOR_YA_MENU_BUTTON = (By.CLASS_NAME, ".services-suggest__icons-more")
-    LOCATOR_YA_PICTURES_BUTTON = (By.LINK_TEXT, "https://yandex.ru/images/")
+    LOCATOR_YA_MENU_BUTTON = (By.CSS_SELECTOR, "a[title='Все сервисы']")
+    LOCATOR_YA_IMAGES_BUTTON = (By.CSS_SELECTOR, ".services-more-popup__section-all a[aria-label='Картинки']")
+    LOCATOR_YA_IMAGES_LINK = (By.PARTIAL_LINK_TEXT, "yandex.ru/images")
 
 
 class SearchManager(BasePage):
@@ -39,5 +40,6 @@ class SearchManager(BasePage):
         assert "Яндекс: нашлось" in self.driver.title
 
     def check_search_result(self):
-        search_result = self.find_element(YaSearchLocators.LOCATOR_YA_LINK)
+        search_result = self.find_element(YaSearchLocators.LOCATOR_YA_TARGET_LINK)
         return search_result
+
