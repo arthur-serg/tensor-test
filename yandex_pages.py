@@ -23,6 +23,7 @@ class YandexLocators:
     MEDIA_VIEWER = (By.CSS_SELECTOR, ".MMViewerModal .Modal-Content[class]")
     FWD_BUTTON = (By.CSS_SELECTOR, ".CircleButton_type_next .CircleButton-Icon")
     BACK_BUTTON = (By.CSS_SELECTOR, ".CircleButton_type_prev .CircleButton-Icon")
+    SELECTED_IMAGE = (By.CSS_SELECTOR, "div[class=MMThumbImage-Image]")
 
 
 class SearchManager(BasePage):
@@ -58,6 +59,7 @@ class SearchManager(BasePage):
 class ImageSearchManager(BasePage):
 
     def check_menu_button(self):
+        # time.sleep(20) #DEBUG CAPTCHA
         search_field = self.find_element(YandexLocators.SEARCH_FIELD)
         search_field.click()
         menu_button = self.find_element(YandexLocators.MENU_BUTTON)
@@ -87,24 +89,56 @@ class ImageSearchManager(BasePage):
         assert search_field.get_attribute('value') == category_title
 
     def open_and_check_image(self):
-        time.sleep(15)  # DEBUG CAPTCHA
         root_image = self.find_element(YandexLocators.ROOT_IMAGE)
         root_image.click()
         media_viewer = self.find_element(YandexLocators.MEDIA_VIEWER)
         assert media_viewer is not None
 
-    def navigate_forward(self):
+    def go_forward_check_image_and_go_backward(self):
+        gallery_container = self.find_element((By.CSS_SELECTOR, ".MMGallery-Container"))
+        all_childs = self.driver.find_element(By.CSS_SELECTOR, ".MMGallery-Container").find_elements(
+            By.CSS_SELECTOR, "*")
+        first_image_index = 0
+        next_image_index = 0
+
+        for i in range(len(all_childs)):
+            selected_item = self.driver.find_element(By.CSS_SELECTOR, ".MMGallery-Item.MMGallery-Item_selected")
+            if (all_childs[i] == selected_item):
+                first_image_index = i
+
+        assert gallery_container is not None, "gallery container was not found"
+
+        first_image = self.find_element(YandexLocators.SELECTED_IMAGE)
+
+        assert first_image is not None
+        assert first_image_index is not None
+
         forward_button = self.find_element(YandexLocators.FWD_BUTTON)
+
+        assert forward_button is not None
+
         forward_button.click()
-        pass
+        next_image = self.find_element(YandexLocators.SELECTED_IMAGE)
+        for i in range(len(all_childs)):
+            selected_item = self.driver.find_element(By.CSS_SELECTOR, ".MMGallery-Item.MMGallery-Item_selected")
+            if (all_childs[i] == selected_item):
+                next_image_index = i
 
-    def check_is_image_changed(self):
-        pass
+        assert next_image is not None
+        assert next_image_index != first_image_index, "Image was not changed after forward navigation"
 
-    def navigate_backwards(self):
         backward_button = self.find_element(YandexLocators.BACK_BUTTON)
-        backward_button.click()
-        pass
 
-    def check_image(self):
-        pass
+        assert backward_button is not None
+
+        backward_button.click()
+        next_image = self.find_element(YandexLocators.SELECTED_IMAGE)
+
+        assert next_image is not None
+
+        for i in range(len(all_childs)):
+            selected_item = self.driver.find_element(By.CSS_SELECTOR, ".MMGallery-Item.MMGallery-Item_selected")
+            if (all_childs[i] == selected_item):
+                next_image_index = i
+
+        assert next_image_index == first_image_index, "Image was not changed after backward navigation"

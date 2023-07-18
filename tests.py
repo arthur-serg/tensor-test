@@ -22,7 +22,6 @@ def test_yandex_images(browser):
     image_search.open_first_category()
     image_search.check_search_field_text()
     image_search.open_and_check_image()
-    image_search.navigate_forward()
-    image_search.check_is_image_changed()
-    image_search.navigate_backwards()
-    image_search.check_image()
+    image_search.go_forward_check_image_and_go_backward()
+
+
