@@ -87,6 +87,11 @@ class ImageSearchManager(BasePage):
         assert search_field.get_attribute('value') == category_title
 
     def open_and_check_image(self):
+        time.sleep(15)  # DEBUG CAPTCHA
+        root_image = self.find_element(YandexLocators.ROOT_IMAGE)
+        root_image.click()
+        media_viewer = self.find_element(YandexLocators.MEDIA_VIEWER)
+        assert media_viewer is not None
 
     def navigate_forward(self):
         pass
