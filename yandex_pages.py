@@ -63,8 +63,6 @@ class ImageSearchManager(BasePage):
         search_field.click()
         menu_button = self.find_element(YandexLocators.MENU_BUTTON)
         assert menu_button is not None
-        self.logger.setLevel(logging.INFO)
-        self.logger.info('check_menu_button passed')
         return
 
     def open_menu_click_images(self):
