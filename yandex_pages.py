@@ -17,15 +17,19 @@ class YaSearchLocators:
     LOCATOR_YA_IMAGES_BUTTON = (By.CSS_SELECTOR, ".services-more-popup__section-all a[aria-label='Картинки']")
     LOCATOR_YA_IMAGES_LINK = (By.PARTIAL_LINK_TEXT, "yandex.ru/images")
     LOCATOR_YA_IMAGES_FIRST_CATEGORY = (By.CSS_SELECTOR, ".PopularRequestList-Item.PopularRequestList-Item_pos_0")
-    LOCATOR_YA_SEARCH_TEXT = (By.CLASS_NAME,".PopularRequestList-Item.PopularRequestList-Item_pos_0 .PopularRequestList-SearchText")
+    LOCATOR_YA_SEARCH_TEXT = (
+        By.CLASS_NAME, ".PopularRequestList-Item.PopularRequestList-Item_pos_0 .PopularRequestList-SearchText")
+
 
 class SearchManager(BasePage):
 
     def check_search_field(self):
+        assert self.find_element(YaSearchLocators.LOCATOR_YA_SEARCH_FIELD) is not None
         return self.find_element(YaSearchLocators.LOCATOR_YA_SEARCH_FIELD)
 
     def check_suggestions(self):
         suggestions_table = self.find_element(YaSearchLocators.LOCATOR_YA_SUGGEST_TABLE, 10)
+        assert suggestions_table is not None
         return suggestions_table
 
     def enter_word(self, word):
@@ -43,6 +47,7 @@ class SearchManager(BasePage):
 
     def check_search_result(self):
         search_result = self.find_element(YaSearchLocators.LOCATOR_YA_TARGET_LINK)
+        assert search_result is not None
         return search_result
 
 
@@ -77,7 +82,6 @@ class ImageSearchManager(BasePage):
         search_field = self.find_element(YaSearchLocators.LOCATOR_YA_SEARCH_INPUT)
         category_title = target_images.get_attribute('innerText')
         assert search_field.get_attribute('value') == category_title
-
 
     def open_and_check_image(self):
         pass
