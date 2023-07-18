@@ -94,12 +94,16 @@ class ImageSearchManager(BasePage):
         assert media_viewer is not None
 
     def navigate_forward(self):
+        forward_button = self.find_element(YandexLocators.FWD_BUTTON)
+        forward_button.click()
         pass
 
     def check_is_image_changed(self):
         pass
 
     def navigate_backwards(self):
+        backward_button = self.find_element(YandexLocators.BACK_BUTTON)
+        backward_button.click()
         pass
 
     def check_image(self):
