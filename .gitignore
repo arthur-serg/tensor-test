@@ -6,3 +6,4 @@
 /__pycache__/
 debug_script.py
 geckodriver.log
+/allure_reports/
