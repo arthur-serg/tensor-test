@@ -1,5 +1,5 @@
 import time
-
+import logging
 from base import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -52,12 +52,19 @@ class SearchManager(BasePage):
 
 
 class ImageSearchManager(BasePage):
+    handler = logging.FileHandler('/logs/')
+    logger = logging.getLogger('selenium')
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
 
     def check_menu_button(self):
         search_field = self.find_element(YaSearchLocators.LOCATOR_YA_SEARCH_FIELD)
         search_field.click()
         menu_button = self.find_element(YaSearchLocators.LOCATOR_YA_MENU_BUTTON)
         assert menu_button is not None
+        self.logger.setLevel(logging.INFO)
+        self.logger.info('check_menu_button passed')
+        return
 
     def open_menu_click_images(self):
         menu_button = self.find_element(YaSearchLocators.LOCATOR_YA_MENU_BUTTON)
