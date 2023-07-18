@@ -1,13 +1,20 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from mylogger import MyLogger
+from loguru import logger
+import os
+from datetime import datetime
+
 
 class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
         self.base_url = "https://ya.ru/"
-        self.my_logger = MyLogger()
+        self.log_filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S-%f.log')
+        self.my_logger = logger
+        if (os.path.isdir("logs")):
+            os.chdir("logs")
+            self.my_logger.add(self.log_filename, format="{time} {level} {message}", backtrace=True)
 
     def find_element(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
