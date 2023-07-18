@@ -7,3 +7,4 @@
 debug_script.py
 geckodriver.log
 /allure_reports/
+/logs/
